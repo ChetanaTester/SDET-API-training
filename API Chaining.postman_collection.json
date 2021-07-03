@@ -1,0 +1,201 @@
+{
+	"info": {
+		"_postman_id": "2b304032-70cd-460f-851b-717c4e7b94af",
+		"name": "API Chaining",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "ListUsers-get vaule & pass",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var result=JSON.parse(responseBody);\r",
+							"var value1=result.data[0].first_name;\r",
+							"var value2=result.data[0].last_name;\r",
+							"tests[\"value 1 is Michael\"]=value1==\"Michael\";\r",
+							"tests[\"value 2 is Lawson\"]=value2==\"Lawson\";\r",
+							"\r",
+							"pm.collectionVariables.set(\"username\", value1);\r",
+							"pm.collectionVariables.set(\"familyName\", value2);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://reqres.in/api/users?page=2",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateUser-replace value placeholder",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{username}}\",\r\n    \"job\": \"{{familyName}}\"\r\n   \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://reqres.in/api/users/2",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users",
+						"2"
+					]
+				},
+				"description": "https://reqres.in/api/users/7"
+			},
+			"response": []
+		},
+		{
+			"name": "List all emp",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var result = JSON.parse(responseBody);\r",
+							"var name = result.data[15].employee_name;\r",
+							"var salary = result.data[15].employee_salary;\r",
+							"var age = result.data[15].employee_age;\r",
+							"\r",
+							"pm.collectionVariables.set(\"ename\",name);\r",
+							"pm.collectionVariables.set(\"esal\",salary);\r",
+							"pm.collectionVariables.set(\"eage\",age);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://dummy.restapiexample.com/api/v1/employees",
+					"protocol": "http",
+					"host": [
+						"dummy",
+						"restapiexample",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"employees"
+					]
+				},
+				"description": "http://dummy.restapiexample.com/api/v1/employees"
+			},
+			"response": []
+		},
+		{
+			"name": "\tUpdate emp",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\t{\"name\":\"{{ename}}\",\"salary\":\"100,000\",\"age\":\"49\", \"profile_image\": \"\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://dummy.restapiexample.com/api/v1/update/21",
+					"protocol": "http",
+					"host": [
+						"dummy",
+						"restapiexample",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"update",
+						"21"
+					]
+				},
+				"description": "http://dummy.restapiexample.com/api/v1/update/21"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "username",
+			"value": "xyz"
+		},
+		{
+			"key": "ename",
+			"value": ""
+		},
+		{
+			"key": "esal",
+			"value": ""
+		},
+		{
+			"key": "eage",
+			"value": ""
+		},
+		{
+			"key": "familyName",
+			"value": ""
+		}
+	]
+}
